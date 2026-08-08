@@ -1,0 +1,52 @@
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: task-api
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    depends_on:
+      - mongo
+
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:8
+
+    container_name: task-mongodb
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo_data:/data/db
+
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express:latest
+
+    container_name: mongo-express
+
+    ports:
+      - "8081:8081"
+
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+
+    depends_on:
+      - mongo
+
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
