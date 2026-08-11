@@ -42,7 +42,7 @@ DB_SUBNET_NAME="${PROJECT}-${ENVIRONMENT}-DB-Subnet"
 DB_SUBNET_PREFIX="10.10.3.0/24"
 
 VM_NAME="${PROJECT}-${ENVIRONMENT}-VM"
-VM_SIZE="Standard_B2s"
+VM_SIZE="Standard_B1s"
 
 NIC_NAME="${PROJECT}-${ENVIRONMENT}-NIC"
 
@@ -232,11 +232,11 @@ az network nsg rule create \
 # DB NSG RULES
 # ============================================================
 
-# PostgreSQL
+# MongoDB 
 az network nsg rule create \
     --resource-group "$RESOURCE_GROUP" \
     --nsg-name "$DB_NSG_NAME" \
-    --name Allow-PostgreSQL-From-App \
+    --name Allow-MongoDB-From-App \
     --priority 100 \
     --direction Inbound \
     --access Allow \
@@ -418,4 +418,4 @@ echo "=========================================="
 echo "Deployment complete."
 echo "=========================================="
 
-done 
+done
